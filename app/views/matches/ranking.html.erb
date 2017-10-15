@@ -14,8 +14,8 @@
 			<% @teams_ranking.each do |team| %>
 			<tr>
 				<td><%= team[:source].name %></td>
-				<td><%= "#{team[:source].player1.last_name} #{team[:source].player1.first_name}" %></td>
-				<td><%= team[:source].player2.present? ? "#{team[:source].player2.last_name} #{team[:source].player2.first_name}" : "" %></td>
+				<td><%= team[:source].player1.full_name %></td>
+				<td><%= team[:source].player2.present? ? team[:source].player2.full_name : "" %></td>
 				<td><%= team[:matches_played] %></td>
 				<td><%= team[:wins] %></td>
 				<td><%= team[:percentage] %>%</td>
