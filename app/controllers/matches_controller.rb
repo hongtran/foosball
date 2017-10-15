@@ -54,7 +54,7 @@ class MatchesController < ApplicationController
       @match[:winner_id] = winner_game.third
     end
     @match.games.first[:team_win_id] = winner_game.first
-    if winner_game.size == 2
+    if winner_game.size > 1
       @match.games.second[:team_win_id] = winner_game.second
     end
     if @match.save

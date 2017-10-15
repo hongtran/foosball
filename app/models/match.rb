@@ -1,7 +1,7 @@
 class Match < ApplicationRecord
-  belongs_to :team_one, class_name: "Team"
-  belongs_to :team_two, class_name: "Team"
-  belongs_to :winner, class_name: "Team"
+  belongs_to :team_one, class_name: "Team", foreign_key: "team_one_id"
+  belongs_to :team_two, class_name: "Team", foreign_key: "team_two_id"
+  belongs_to :winner, class_name: "Team", foreign_key: "winner_id"
   has_many :games, dependent: :destroy
   validate :unique_team_on_match
   validate :validate_game_count
