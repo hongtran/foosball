@@ -36,6 +36,8 @@ URL: **https://hongfoosball.herokuapp.com/**
 
 ## Prototype
 
+## Video Walkthrough
+[Imgur](https://i.imgur.com/tqG1v6C.gifv)
 
 ## Notes
 
