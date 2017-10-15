@@ -1,0 +1,26 @@
+<div class="container">
+	<table class="table">
+		<thead class="thead thead-default">
+			<tr>
+				<th>Match</th>
+				<th>Team one</th>
+				<th>Team two</th>
+				<th>Winner</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @matches.each do |match| %>
+			<tr>
+				<td><%= match.id %></td>
+				<td><%= match.team_one.name %></td>
+				<td><%= match.team_two.name %></td>
+				<td><%= match.winner.name %></td>
+				<td><%= link_to "Edit", edit_match_path(match), class: "btn btn-secondary" %></td>
+				<td><%= link_to "Delete", match, method: :delete, data: { confirm: "Are you sure?" } %></td>
+			</tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+	<table class="table">
+		<thead class="thead thead-default">
+			<tr>
+				<th>Match</th>
+				<th>Team one</th>
+				<th>Team one score</th>
+				<th>Team two</th>
+				<th>Team two score</th>
+				<th>Team win</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @games.each do |game| %>
+			<tr>
+				<td><%= game.match.id %></td>
+				<td><%= game.match.team_one.name %></td>
+				<td><%= game.team1_score %></td>
+				<td><%= game.match.team_two.name %></td>
+				<td><%= game.team2_score %></td>
+				<td><%= game.team_win.name %></td>
+			</tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>

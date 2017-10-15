@@ -1,0 +1,26 @@
+<div class="container">
+	<table class="table">
+		<thead class="thead thead-default">
+			<tr>
+				<th>Name</th>
+				<th>Player 1</th>
+				<th>Player 2</th>
+				<th>Total Matches</th>
+				<th>Total Wins</th>
+				<th>Win %</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @teams_ranking.each do |team| %>
+			<tr>
+				<td><%= team[:source].name %></td>
+				<td><%= "#{team[:source].player1.last_name} #{team[:source].player1.first_name}" %></td>
+				<td><%= team[:source].player2.present? ? "#{team[:source].player2.last_name} #{team[:source].player2.first_name}" : "" %></td>
+				<td><%= team[:matches_played] %></td>
+				<td><%= team[:wins] %></td>
+				<td><%= team[:percentage] %>%</td>
+			</tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>

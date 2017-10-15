@@ -1,0 +1,32 @@
+<%= nested_form_for match do |f| %>
+	<%= error_messages!(match) %>
+	<div class="form-group">
+		<%= f.label :team_one, class: 'form-controll-label' %>
+	  <%= f.collection_select(:team_one_id, Team.all, :id, :name, {}, class: 'form-control') %>
+  </div>
+  <div class="form-group">
+  	<%= f.label :team_two, class: 'form-controll-label' %>
+  	<%= f.collection_select(:team_two_id, Team.all, :id, :name, {}, class: 'form-control') %>
+  </div>
+  <div class="form-group nested-games">
+  	<% n_game = 0 %>
+  	<%= f.fields_for :games do |game| %>
+  		<% n_game += 1 %>
+  		<%= f.label "game_#{n_game}", class: 'form-controll-label label-game-session' %>
+	  	<div class="row">
+		    <div class="col">
+		    	<%= game.label :team_one_score, class: 'form-controll-label' %>
+		      <%= game.select(:team1_score, options_for_select((0..10).map{|i| [i,i]}, :selected => game.object.team1_score), {}, {class: 'form-control'}) %>
+		    </div>  
+		    <div class="col">
+		    	<%= game.label :team_two_score, class: 'form-controll-label' %>
+		      <%= game.select(:team2_score, options_for_select((0..10).map{|i| [i,i]}, :selected => game.object.team2_score), {}, {class: 'form-control' }) %>
+		    </div>
+		  </div>
+	  <% end %>
+	  <%= f.link_to_add "Add game", :games %>
+  </div>
+  <div class="form-group">
+  	<%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

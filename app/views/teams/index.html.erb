@@ -1,0 +1,26 @@
+<div class="container">
+	<table class="table">
+		<thead class="thead thead-default">
+			<tr>
+				<th>Name</th>
+				<th>Player 1</th>
+				<th>Player 2</th>
+				<th>Edit</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<% @teams.each do |team| %>
+			<tr>
+				<td><%= team.name %></td>
+				<td><%= "#{team.player1.last_name} #{team.player1.first_name}" %></td>
+				<td>
+					<%= team.player2.present? ? "#{team.player2.last_name} #{team.player2.first_name}" : "" %>
+				</td>
+				<td><%= link_to "Edit", edit_team_path(team), class: "btn btn-secondary" %></td>
+				
+			</tr>
+			<% end %>
+		</tbody>	
+	</table>
+</div>
