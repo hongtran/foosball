@@ -15,25 +15,7 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    games_attributes = params[:match][:games_attributes]
-    winner_game = []
-    games_attributes.each do |k, game|
-      winner_game << team_win_game(game)
-    end
-    if(winner_game.third.present?)
-      @match.games.third[:team_win_id] = winner_game.third
-    end
-
-    if(winner_game.first == winner_game.second)
-      @match[:winner_id] = winner_game.first
-    else
-      @match[:winner_id] = winner_game.third
-    end
-
-    @match.games.first[:team_win_id] = winner_game.first
-    if winner_game.size > 1
-      @match.games.second[:team_win_id] = winner_game.second
-    end
+    @match[:winner_id] = match_winner
     if @match.update_attributes match_params
       flash[:success] = "Match updated successfully"
       redirect_to matches_path
@@ -44,23 +26,7 @@ class MatchesController < ApplicationController
 
   def create
     @match = Match.new match_params
-    games_attributes = params[:match][:games_attributes]
-    winner_game = []
-    games_attributes.each do |k, game|
-      winner_game << team_win_game(game)
-    end
-    if(winner_game.third.present?)
-      @match.games.third[:team_win_id] = winner_game.third
-    end
-    if(winner_game.first == winner_game.second)
-      @match[:winner_id] = winner_game.first
-    else
-      @match[:winner_id] = winner_game.third
-    end
-    @match.games.first[:team_win_id] = winner_game.first
-    if winner_game.size > 1
-      @match.games.second[:team_win_id] = winner_game.second
-    end
+    @match[:winner_id] = match_winner
     if @match.save
       flash[:success] = "Match created successfully"
       redirect_to matches_path
@@ -80,6 +46,19 @@ class MatchesController < ApplicationController
   end
 
   private
+  def match_winner
+    games_attributes = params[:match][:games_attributes]
+    winner_game = []
+    games_attributes.each do |k, game|
+      winner_game << team_win_game(game)
+    end
+    if(winner_game.first == winner_game.second)
+      winner_id = winner_game.first
+    else
+      winner_id = winner_game.third
+    end
+    return winner_id
+  end
   def team_win_game(game)
     if(game[:team1_score].to_i > game[:team2_score].to_i)
       team_win = params[:match][:team_one_id]

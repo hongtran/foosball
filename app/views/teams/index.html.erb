@@ -13,9 +13,9 @@
 			<% @teams.each do |team| %>
 			<tr>
 				<td><%= team.name %></td>
-				<td><%= "#{team.player1.last_name} #{team.player1.first_name}" %></td>
+				<td><%= team.player1.full_name %></td>
 				<td>
-					<%= team.player2.present? ? "#{team.player2.last_name} #{team.player2.first_name}" : "" %>
+					<%= team.player2.present? ? team.player2.full_name : "" %>
 				</td>
 				<td><%= link_to "Edit", edit_team_path(team), class: "btn btn-secondary" %></td>
 				<td><%= link_to "Delete", team, method: :delete, data: { confirm: "Are you sure?" } %></td>

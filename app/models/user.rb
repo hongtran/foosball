@@ -7,4 +7,8 @@ class User < ApplicationRecord
   def teams
     player1_teams + player2_teams
   end
+
+  def full_name
+    first_name + " " + last_name
+  end
 end

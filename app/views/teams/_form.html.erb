@@ -6,11 +6,11 @@
   </div>
   <div class="form-group">
   	<%= f.label :player1, class: 'form-controll-label' %>
-  	<%= f.select(:player1_id, @users.map { |e|  ["#{e.first_name} #{e.last_name}", e.id] }, { :prompt => "Select player one"}, {class: "form-control"} )%>
+  	<%= f.select(:player1_id, @users.map { |e|  [e.full_name, e.id] }, { :prompt => "Select player one"}, {class: "form-control"} )%>
   </div>
   <div class="form-group">
   	<%= f.label :player2, class: 'form-controll-label' %>
-  	<%= f.select(:player2_id, @users.map { |e|  ["#{e.first_name} #{e.last_name}", e.id] }, { :include_blank => "Leave blank if play solo" }, {class: "form-control"} )%>
+  	<%= f.select(:player2_id, @users.map { |e|  [e.full_name, e.id] }, { :include_blank => "Leave blank if play solo" }, {class: "form-control"} )%>
   </div>
   <div class="form-group">
   	<%= f.submit "Submit", class: "btn btn-primary" %>
