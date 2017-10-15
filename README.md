@@ -1,6 +1,6 @@
 # Fantasy Foosball website
 
-URL: **https://iflight.herokuapp.com/**
+URL: **https://hongfoosball.herokuapp.com/**
 
 ## About
 
