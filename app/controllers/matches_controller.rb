@@ -23,13 +23,17 @@ class MatchesController < ApplicationController
     if(winner_game.third.present?)
       @match.games.third[:team_win_id] = winner_game.third
     end
+
     if(winner_game.first == winner_game.second)
       @match[:winner_id] = winner_game.first
     else
       @match[:winner_id] = winner_game.third
     end
+
     @match.games.first[:team_win_id] = winner_game.first
-    @match.games.second[:team_win_id] = winner_game.second
+    if winner_game.size > 1
+      @match.games.second[:team_win_id] = winner_game.second
+    end
     if @match.update_attributes match_params
       flash[:success] = "Match updated successfully"
       redirect_to matches_path
