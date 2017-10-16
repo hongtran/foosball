@@ -9,6 +9,10 @@ RSpec.describe Match, type: :model do
     let(:match){match = Match.new(team_one: team1, team_two: team1, winner: team1)}
     let(:match1){match1 = Match.new(team_one: team1, team_two: nil, winner: team1)}
     let(:match2){match2 = Match.new(team_one: team1, team_two: team1, winner: nil)}
+    let(:match3){match3 = Match.new(team_one: team1, team_two: team2, winner: team1)}
+    let(:game1){game1 = Game.create(team1_score: 10, team2_score: 5, team_win: nil, match: match3)}
+    let(:game2){game2 = Game.create(team1_score: 8, team2_score: 5, team_win: nil, match: match3)}
+
     it "check 2 teams in match have to different" do
       match.save
       expect(match.errors[:team]).to include "has to be different"
@@ -27,6 +31,12 @@ RSpec.describe Match, type: :model do
     it "match has one winning team" do
       match2.save
       expect(match2.errors[:winner]).to include "must exist"
+    end
+
+    it "check match winner when team win 2 games" do
+      match3.save
+      expect(match3.winner).to eq team1
     end  
+
   end  
 end
