@@ -4,9 +4,23 @@ class Match < ApplicationRecord
   belongs_to :winner, class_name: "Team", foreign_key: "winner_id"
   has_many :games, dependent: :destroy
   validate :unique_team_on_match
+  validate :unique_player_on_match
   validate :validate_game_count
   accepts_nested_attributes_for :games, limit: 3
   
+  def unique_player_on_match
+    players_match = []
+    players_match << team_one.player1
+    players_match << team_one.player2 if team_one.player2.present?
+    if team_two.present?
+      players_match << team_two.player1
+      players_match << team_two.player2 if team_two.player2.present?
+    end
+    if players_match.detect{|e| players_match.count(e) > 1}
+      errors.add(:players, "in a match has to uniqueness")
+    end  
+  end
+
   def unique_team_on_match
     unless team_one != team_two
       errors.add(:team, "has to be different")

@@ -12,7 +12,8 @@ RSpec.describe Match, type: :model do
     let(:match3){match3 = Match.new(team_one: team1, team_two: team2, winner: team1)}
     let(:game1){game1 = Game.create(team1_score: 10, team2_score: 5, team_win: nil, match: match3)}
     let(:game2){game2 = Game.create(team1_score: 8, team2_score: 5, team_win: nil, match: match3)}
-
+    let(:team3){team3 = Team.create(name: "team3", player1: user1, player2: user2)}
+    let(:match4){match4 = Match.new(team_one: team1, team_two: team3, winner: team1)}
     it "check 2 teams in match have to different" do
       match.save
       expect(match.errors[:team]).to include "has to be different"
@@ -38,5 +39,9 @@ RSpec.describe Match, type: :model do
       expect(match3.winner).to eq team1
     end  
 
+    it "check players uniqueness in match" do
+      match4.save
+      expect(match4.errors[:players]).to include "in a match has to uniqueness"
+    end  
   end  
 end
