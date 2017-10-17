@@ -6,6 +6,7 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
     @users = User.all
+    @team.team_players.build
   end
 
   def edit
@@ -47,6 +48,6 @@ class TeamsController < ApplicationController
 
   private
   def team_params
-    params.require(:team).permit(:name, :player1_id, :player2_id)
+    params.require(:team).permit(:name, team_players_attributes: [:id, :user_id, :_destroy])
   end
 end

@@ -10,11 +10,11 @@ class Match < ApplicationRecord
   
   def unique_player_on_match
     players_match = []
-    players_match << team_one.player1
-    players_match << team_one.player2 if team_one.player2.present?
+    players_match << team_one.team_players.first
+    players_match << team_one.team_players.second if team_one.team_players.second.present?
     if team_two.present?
-      players_match << team_two.player1
-      players_match << team_two.player2 if team_two.player2.present?
+      players_match << team_two.team_players.first
+      players_match << team_two.team_players.second if team_two.team_players.second.present?
     end
     if players_match.detect{|e| players_match.count(e) > 1}
       errors.add(:players, "in a match has to uniqueness")

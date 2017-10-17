@@ -1,3 +1,15 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$(document).on 'turbolinks:load', ->
+	$(document).on('nested:fieldAdded', (event) ->
+		field = event.field;
+		number = $('.nested-team-players .fields').length
+		field.css("padding-top", "15px")
+		field.find(".label-player-session").text("Player " + number)
+		$(".add_nested_fields").hide()
+	)
+
+	$(document).on('nested:fieldRemoved', (event) ->
+		field = event.field;
+		number = $('.nested-team-players .fields').length
+		field.css("padding-top", "15px")
+		$(".add_nested_fields").show()
+	)

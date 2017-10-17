@@ -4,15 +4,18 @@ RSpec.describe Match, type: :model do
   describe "check validate match" do
     let(:user1){user1 = User.create(first_name: "test", last_name: "test")}
     let(:user2){user2 = User.create(first_name: "abc", last_name: "xyz")}
-    let(:team1){team1 = Team.create(name: "Real", player1: user1, player2: nil)}
-    let(:team2){team2 = Team.create(name: "Barca", player1: user2, player2: nil)}
+    let(:team1){team1 = Team.create(name: "Real", :team_players_attributes => [{user: user1}, {user: user2}])}
+    let(:team2){team2 = Team.create(name: "Barca")}
     let(:match){match = Match.new(team_one: team1, team_two: team1, winner: team1)}
     let(:match1){match1 = Match.new(team_one: team1, team_two: nil, winner: team1)}
     let(:match2){match2 = Match.new(team_one: team1, team_two: team1, winner: nil)}
     let(:match3){match3 = Match.new(team_one: team1, team_two: team2, winner: team1)}
     let(:game1){game1 = Game.create(team1_score: 10, team2_score: 5, team_win: nil, match: match3)}
     let(:game2){game2 = Game.create(team1_score: 8, team2_score: 5, team_win: nil, match: match3)}
-    let(:team3){team3 = Team.create(name: "team3", player1: user1, player2: user2)}
+    let(:team3){team3 = Team.create(name: "team3", :team_players_attributes => [{user: user1}])}
+    let(:team_player1){team_player1 = TeamPlayer.create(user: user1, team: team1)}
+    let(:team_player2){team_player2 = TeamPlayer.create(user: user2, team: team1)}
+    let(:team_player3){team_player3 = TeamPlayer.create(user: user1, team: team3)}
     let(:match4){match4 = Match.new(team_one: team1, team_two: team3, winner: team1)}
     it "check 2 teams in match have to different" do
       match.save

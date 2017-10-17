@@ -1,16 +1,18 @@
 class Team < ApplicationRecord
-  belongs_to :player1, class_name: "User", foreign_key: "player1_id"
-  belongs_to :player2, class_name: "User", foreign_key: "player2_id", optional: true
+  has_many :team_players, dependent: :destroy
   has_many :team_one_matches, class_name: "Match", foreign_key: "team_one_id", dependent: :destroy
   has_many :team_two_matches, class_name: "Match", foreign_key: "team_two_id", dependent: :destroy
-  validates :player1, presence: true
-  validates :player1, uniqueness: {scope: :player2}
-  validates :player2, uniqueness: {scope: :player1}
   validates :name, presence: true
+  accepts_nested_attributes_for :team_players, :allow_destroy => true
   validate :unique_player_on_team
+  validate :requie_at_least_one_player
+
+  def requie_at_least_one_player
+    errors.add(:base, "You must provide at least one player") if team_players.size < 1
+  end
 
   def unique_player_on_team
-    unless player1 != player2
+    if(team_players.second.present? and team_players.first.user == team_players.second.user)
       errors.add(:player, "has to be different")
     end
   end

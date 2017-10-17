@@ -4,6 +4,6 @@ $(document).on 'turbolinks:load', ->
 		number = $('.nested-games .fields').length
 		field.css("padding-top", "15px")
 		field.find(".label-game-session").text("Game " + number)
-		if(number == 3)
+		if(number > 2)
 			$(".add_nested_fields").hide()
 	)

@@ -16,4 +16,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require matches
+//= require teams
 //= require jquery_nested_form

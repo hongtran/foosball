@@ -1,16 +1,22 @@
-<%= form_for team do |f| %>
+<%= nested_form_for team do |f| %>
   <%= error_messages!(team) %>
 	<div class="form-group">
 		<%= f.label :name, class: 'form-controll-label' %>
 	  <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="form-group">
-  	<%= f.label :player1, class: 'form-controll-label' %>
-  	<%= f.select(:player1_id, @users.map { |e|  [e.full_name, e.id] }, { :prompt => "Select player one"}, {class: "form-control"} )%>
-  </div>
-  <div class="form-group">
-  	<%= f.label :player2, class: 'form-controll-label' %>
-  	<%= f.select(:player2_id, @users.map { |e|  [e.full_name, e.id] }, { :include_blank => "Leave blank if play solo" }, {class: "form-control"} )%>
+  <div class="form-group nested-team-players">
+    <% player_n = 0 %>
+    <%= f.fields_for :team_players do |team_player| %>
+      <% player_n += 1 %>
+      <%= team_player.label "player#{player_n}", class: 'form-controll-label label-player-session' %>
+      <%= team_player.select(:user_id, @users.map { |e|  [e.full_name, e.id] }, { :prompt => "Select player"}, {class: "form-control"} )%>
+      <% if player_n > 1 %>
+        <%= team_player.link_to_remove "Remove Player" %>
+      <% end %>
+    <% end %>
+    <% if team.team_players.count < 2 %>
+      <%= f.link_to_add "Add player", :team_players, class: "btn btn-success" %>
+    <% end %>
   </div>
   <div class="form-group">
   	<%= f.submit "Submit", class: "btn btn-primary" %>
